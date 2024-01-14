@@ -5,19 +5,18 @@ import pandas as pd
 import requests
 import psycopg2
 import plotly.express as px
-import plotly.graph_objects as go
 from streamlit_option_menu import option_menu
 
 
 #aggre_insurance
-path7= "D:/phonepe_pulse/pulse/data/aggregated/insurance/country/india/state/"
+path1= "D:/phonepe_pulse/pulse/data/aggregated/insurance/country/india/state/"
 
-agg_insur_list= os.listdir(path7)
+agg_insur_list= os.listdir(path1)
 
-columns7= {"States":[], "Years":[], "Quarter":[], "Insurance_type":[], "Insurance_count":[],"Insurance_amount":[] }
+columns1= {"States":[], "Years":[], "Quarter":[], "Insurance_type":[], "Insurance_count":[],"Insurance_amount":[] }
 
 for state in agg_insur_list:
-    cur_states =path7+state+"/"
+    cur_states =path1+state+"/"
     agg_year_list = os.listdir(cur_states)
     
     for year in agg_year_list:
@@ -33,15 +32,15 @@ for state in agg_insur_list:
                 name = i["name"]
                 count = i["paymentInstruments"][0]["count"]
                 amount = i["paymentInstruments"][0]["amount"]
-                columns7["Insurance_type"].append(name)
-                columns7["Insurance_count"].append(count)
-                columns7["Insurance_amount"].append(amount)
-                columns7["States"].append(state)
-                columns7["Years"].append(year)
-                columns7["Quarter"].append(int(file.strip(".json")))
+                columns1["Insurance_type"].append(name)
+                columns1["Insurance_count"].append(count)
+                columns1["Insurance_amount"].append(amount)
+                columns1["States"].append(state)
+                columns1["Years"].append(year)
+                columns1["Quarter"].append(int(file.strip(".json")))
 
 
-aggre_insurance = pd.DataFrame(columns7)
+aggre_insurance = pd.DataFrame(columns1)
 
 aggre_insurance["States"] = aggre_insurance["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 aggre_insurance["States"] = aggre_insurance["States"].str.replace("-"," ")
@@ -50,14 +49,14 @@ aggre_insurance['States'] = aggre_insurance['States'].str.replace("Dadra & Nagar
 
 
 #aggre_transaction
-path1 = "D:/phonepe_pulse/pulse/data/aggregated/transaction/country/india/state/"
+path2 = "D:/phonepe_pulse/pulse/data/aggregated/transaction/country/india/state/"
          
-agg_tran_list = os.listdir(path1)
+agg_tran_list = os.listdir(path2)
 
-columns1 ={"States":[], "Years":[], "Quarter":[], "Transaction_type":[], "Transaction_count":[],"Transaction_amount":[] }
+columns2 ={"States":[], "Years":[], "Quarter":[], "Transaction_type":[], "Transaction_count":[],"Transaction_amount":[] }
 
 for state in agg_tran_list:
-    cur_states =path1+state+"/"
+    cur_states =path2+state+"/"
     agg_year_list = os.listdir(cur_states)
     
     for year in agg_year_list:
@@ -73,14 +72,14 @@ for state in agg_tran_list:
                 name = i["name"]
                 count = i["paymentInstruments"][0]["count"]
                 amount = i["paymentInstruments"][0]["amount"]
-                columns1["Transaction_type"].append(name)
-                columns1["Transaction_count"].append(count)
-                columns1["Transaction_amount"].append(amount)
-                columns1["States"].append(state)
-                columns1["Years"].append(year)
-                columns1["Quarter"].append(int(file.strip(".json")))
+                columns2["Transaction_type"].append(name)
+                columns2["Transaction_count"].append(count)
+                columns2["Transaction_amount"].append(amount)
+                columns2["States"].append(state)
+                columns2["Years"].append(year)
+                columns2["Quarter"].append(int(file.strip(".json")))
 
-aggre_transaction = pd.DataFrame(columns1)
+aggre_transaction = pd.DataFrame(columns2)
 
 aggre_transaction["States"] = aggre_transaction["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 aggre_transaction["States"] = aggre_transaction["States"].str.replace("-"," ")
@@ -88,14 +87,14 @@ aggre_transaction["States"] = aggre_transaction["States"].str.title()
 aggre_transaction['States'] = aggre_transaction['States'].str.replace("Dadra & Nagar Haveli & Daman & Diu", "Dadra and Nagar Haveli and Daman and Diu")
 
 #aggre_user
-path2 = "D:/phonepe_pulse/pulse/data/aggregated/user/country/india/state/"
+path3 = "D:/phonepe_pulse/pulse/data/aggregated/user/country/india/state/"
          
-agg_user_list = os.listdir(path2)
+agg_user_list = os.listdir(path3)
 
-columns2 = {"States":[], "Years":[], "Quarter":[], "Brands":[],"Transaction_count":[], "Percentage":[]}
+columns3 = {"States":[], "Years":[], "Quarter":[], "Brands":[],"Transaction_count":[], "Percentage":[]}
 
 for state in agg_user_list:
-    cur_states = path2+state+"/"
+    cur_states = path3+state+"/"
     agg_year_list = os.listdir(cur_states)
     
     for year in agg_year_list:
@@ -113,17 +112,17 @@ for state in agg_user_list:
                     brand = i["brand"]
                     count = i["count"]
                     percentage = i["percentage"]
-                    columns2["Brands"].append(brand)
-                    columns2["Transaction_count"].append(count)
-                    columns2["Percentage"].append(percentage)
-                    columns2["States"].append(state)
-                    columns2["Years"].append(year)
-                    columns2["Quarter"].append(int(file.strip(".json")))
+                    columns3["Brands"].append(brand)
+                    columns3["Transaction_count"].append(count)
+                    columns3["Percentage"].append(percentage)
+                    columns3["States"].append(state)
+                    columns3["Years"].append(year)
+                    columns3["Quarter"].append(int(file.strip(".json")))
             
             except:
                 pass
 
-aggre_user = pd.DataFrame(columns2)
+aggre_user = pd.DataFrame(columns3)
 
 aggre_user["States"] = aggre_user["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 aggre_user["States"] = aggre_user["States"].str.replace("-"," ")
@@ -131,14 +130,14 @@ aggre_user["States"] = aggre_user["States"].str.title()
 aggre_user['States'] = aggre_user['States'].str.replace("Dadra & Nagar Haveli & Daman & Diu", "Dadra and Nagar Haveli and Daman and Diu")
 
 #map_insurance
-path8= "D:/phonepe_pulse/pulse/data/map/insurance/hover/country/india/state/"
+path4= "D:/phonepe_pulse/pulse/data/map/insurance/hover/country/india/state/"
 
-map_insur_list= os.listdir(path8)
+map_insur_list= os.listdir(path4)
 
-columns8= {"States":[], "Years":[], "Quarter":[], "Districts":[], "Transaction_count":[],"Transaction_amount":[] }
+columns4= {"States":[], "Years":[], "Quarter":[], "Districts":[], "Transaction_count":[],"Transaction_amount":[] }
 
 for state in map_insur_list:
-    cur_states =path8+state+"/"
+    cur_states =path4+state+"/"
     agg_year_list = os.listdir(cur_states)
     
     for year in agg_year_list:
@@ -154,15 +153,15 @@ for state in map_insur_list:
                 name = i["name"]
                 count = i["metric"][0]["count"]
                 amount = i["metric"][0]["amount"]
-                columns8["Districts"].append(name)
-                columns8["Transaction_count"].append(count)
-                columns8["Transaction_amount"].append(amount)
-                columns8["States"].append(state)
-                columns8["Years"].append(year)
-                columns8["Quarter"].append(int(file.strip(".json")))
+                columns4["Districts"].append(name)
+                columns4["Transaction_count"].append(count)
+                columns4["Transaction_amount"].append(amount)
+                columns4["States"].append(state)
+                columns4["Years"].append(year)
+                columns4["Quarter"].append(int(file.strip(".json")))
 
 
-map_insurance = pd.DataFrame(columns8)
+map_insurance = pd.DataFrame(columns4)
 
 map_insurance["States"] = map_insurance["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 map_insurance["States"] = map_insurance["States"].str.replace("-"," ")
@@ -171,13 +170,13 @@ map_insurance['States'] = map_insurance['States'].str.replace("Dadra & Nagar Hav
 
 
 #map_transaction
-path3 = "D:/phonepe_pulse/pulse/data/map/transaction/hover/country/india/state/"
-map_tran_list = os.listdir(path3)
+path5 = "D:/phonepe_pulse/pulse/data/map/transaction/hover/country/india/state/"
+map_tran_list = os.listdir(path5)
 
-columns3 = {"States":[], "Years":[], "Quarter":[],"District":[], "Transaction_count":[],"Transaction_amount":[]}
+columns5 = {"States":[], "Years":[], "Quarter":[],"District":[], "Transaction_count":[],"Transaction_amount":[]}
 
 for state in map_tran_list:
-    cur_states = path3+state+"/"
+    cur_states = path5+state+"/"
     map_year_list = os.listdir(cur_states)
     
     for year in map_year_list:
@@ -193,14 +192,14 @@ for state in map_tran_list:
                 name = i["name"]
                 count = i["metric"][0]["count"]
                 amount = i["metric"][0]["amount"]
-                columns3["District"].append(name)
-                columns3["Transaction_count"].append(count)
-                columns3["Transaction_amount"].append(amount)
-                columns3["States"].append(state)
-                columns3["Years"].append(year)
-                columns3["Quarter"].append(int(file.strip(".json")))
+                columns5["District"].append(name)
+                columns5["Transaction_count"].append(count)
+                columns5["Transaction_amount"].append(amount)
+                columns5["States"].append(state)
+                columns5["Years"].append(year)
+                columns5["Quarter"].append(int(file.strip(".json")))
 
-map_transaction = pd.DataFrame(columns3)
+map_transaction = pd.DataFrame(columns5)
 
 map_transaction["States"] = map_transaction["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 map_transaction["States"] = map_transaction["States"].str.replace("-"," ")
@@ -209,14 +208,14 @@ map_transaction['States'] = map_transaction['States'].str.replace("Dadra & Nagar
 
                 
 #map_user
-path4 = "D:/phonepe_pulse/pulse/data/map/user/hover/country/india/state/"
+path6 = "D:/phonepe_pulse/pulse/data/map/user/hover/country/india/state/"
 
-map_user_list = os.listdir(path4)
+map_user_list = os.listdir(path6)
 
-columns4 = {"States":[], "Years":[], "Quarter":[], "Districts":[], "RegisteredUser":[], "AppOpens":[]}
+columns6 = {"States":[], "Years":[], "Quarter":[], "Districts":[], "RegisteredUser":[], "AppOpens":[]}
 
 for state in map_user_list:
-    cur_states = path4+state+"/"
+    cur_states = path6+state+"/"
     map_year_list = os.listdir(cur_states)
     
     for year in map_year_list:
@@ -232,14 +231,14 @@ for state in map_user_list:
                 district = i[0]
                 registereduser = i[1]["registeredUsers"]
                 appopens = i[1]["appOpens"]
-                columns4["Districts"].append(district)
-                columns4["RegisteredUser"].append(registereduser)
-                columns4["AppOpens"].append(appopens)
-                columns4["States"].append(state)
-                columns4["Years"].append(year)
-                columns4["Quarter"].append(int(file.strip(".json")))
+                columns6["Districts"].append(district)
+                columns6["RegisteredUser"].append(registereduser)
+                columns6["AppOpens"].append(appopens)
+                columns6["States"].append(state)
+                columns6["Years"].append(year)
+                columns6["Quarter"].append(int(file.strip(".json")))
 
-map_user = pd.DataFrame(columns4)
+map_user = pd.DataFrame(columns6)
 
 map_user["States"] = map_user["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 map_user["States"] = map_user["States"].str.replace("-"," ")
@@ -248,14 +247,14 @@ map_user['States'] = map_user['States'].str.replace("Dadra & Nagar Haveli & Dama
 
 #top_insurance
 
-path9 = "D:/phonepe_pulse/pulse/data/top/insurance/country/india/state/"
+path7 = "D:/phonepe_pulse/pulse/data/top/insurance/country/india/state/"
 
-top_insur_list = os.listdir(path9)
+top_insur_list = os.listdir(path7)
 
-columns9 = {"States":[], "Years":[], "Quarter":[], "Pincodes":[], "Transaction_count":[], "Transaction_amount":[]}
+columns7 = {"States":[], "Years":[], "Quarter":[], "Pincodes":[], "Transaction_count":[], "Transaction_amount":[]}
 
 for state in top_insur_list:
-    cur_states = path9+state+"/"
+    cur_states = path7+state+"/"
     top_year_list = os.listdir(cur_states)
 
     for year in top_year_list:
@@ -271,14 +270,14 @@ for state in top_insur_list:
                 entityName = i["entityName"]
                 count = i["metric"]["count"]
                 amount = i["metric"]["amount"]
-                columns9["Pincodes"].append(entityName)
-                columns9["Transaction_count"].append(count)
-                columns9["Transaction_amount"].append(amount)
-                columns9["States"].append(state)
-                columns9["Years"].append(year)
-                columns9["Quarter"].append(int(file.strip(".json")))
+                columns7["Pincodes"].append(entityName)
+                columns7["Transaction_count"].append(count)
+                columns7["Transaction_amount"].append(amount)
+                columns7["States"].append(state)
+                columns7["Years"].append(year)
+                columns7["Quarter"].append(int(file.strip(".json")))
 
-top_insur = pd.DataFrame(columns9)
+top_insur = pd.DataFrame(columns7)
 
 top_insur["States"] = top_insur["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 top_insur["States"] = top_insur["States"].str.replace("-"," ")
@@ -287,13 +286,13 @@ top_insur['States'] = top_insur['States'].str.replace("Dadra & Nagar Haveli & Da
   
 
 #top_transaction
-path5 = "D:/phonepe_pulse/pulse/data/top/transaction/country/india/state/"
-top_tran_list = os.listdir(path5)
+path8 = "D:/phonepe_pulse/pulse/data/top/transaction/country/india/state/"
+top_tran_list = os.listdir(path8)
 
-columns5 = {"States":[], "Years":[], "Quarter":[], "Pincodes":[], "Transaction_count":[], "Transaction_amount":[]}
+columns8 = {"States":[], "Years":[], "Quarter":[], "Pincodes":[], "Transaction_count":[], "Transaction_amount":[]}
 
 for state in top_tran_list:
-    cur_states = path5+state+"/"
+    cur_states = path8+state+"/"
     top_year_list = os.listdir(cur_states)
     
     for year in top_year_list:
@@ -309,14 +308,14 @@ for state in top_tran_list:
                 entityName = i["entityName"]
                 count = i["metric"]["count"]
                 amount = i["metric"]["amount"]
-                columns5["Pincodes"].append(entityName)
-                columns5["Transaction_count"].append(count)
-                columns5["Transaction_amount"].append(amount)
-                columns5["States"].append(state)
-                columns5["Years"].append(year)
-                columns5["Quarter"].append(int(file.strip(".json")))
+                columns8["Pincodes"].append(entityName)
+                columns8["Transaction_count"].append(count)
+                columns8["Transaction_amount"].append(amount)
+                columns8["States"].append(state)
+                columns8["Years"].append(year)
+                columns8["Quarter"].append(int(file.strip(".json")))
 
-top_transaction = pd.DataFrame(columns5)
+top_transaction = pd.DataFrame(columns8)
 
 top_transaction["States"] = top_transaction["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 top_transaction["States"] = top_transaction["States"].str.replace("-"," ")
@@ -325,14 +324,14 @@ top_transaction['States'] = top_transaction['States'].str.replace("Dadra & Nagar
 
 
 #top_user
-path6 = "D:/phonepe_pulse/pulse/data/top/user/country/india/state/"
+path9 = "D:/phonepe_pulse/pulse/data/top/user/country/india/state/"
 
-top_user_list = os.listdir(path6)
+top_user_list = os.listdir(path9)
 
-columns6 = {"States":[], "Years":[], "Quarter":[], "Pincodes":[], "RegisteredUser":[]}
+columns9 = {"States":[], "Years":[], "Quarter":[], "Pincodes":[], "RegisteredUser":[]}
 
 for state in top_user_list:
-    cur_states = path6+state+"/"
+    cur_states = path9+state+"/"
     top_year_list = os.listdir(cur_states)
 
     for year in top_year_list:
@@ -347,13 +346,13 @@ for state in top_user_list:
             for i in I["data"]["pincodes"]:
                 name = i["name"]
                 registeredusers = i["registeredUsers"]
-                columns6["Pincodes"].append(name)
-                columns6["RegisteredUser"].append(registereduser)
-                columns6["States"].append(state)
-                columns6["Years"].append(year)
-                columns6["Quarter"].append(int(file.strip(".json")))
+                columns9["Pincodes"].append(name)
+                columns9["RegisteredUser"].append(registereduser)
+                columns9["States"].append(state)
+                columns9["Years"].append(year)
+                columns9["Quarter"].append(int(file.strip(".json")))
 
-top_user = pd.DataFrame(columns6)
+top_user = pd.DataFrame(columns9)
 
 top_user["States"] = top_user["States"].str.replace("andaman-&-nicobar-islands","Andaman & Nicobar")
 top_user["States"] = top_user["States"].str.replace("-"," ")
@@ -372,18 +371,18 @@ mydb = psycopg2.connect(host = "localhost",
 cursor = mydb.cursor()
 
 #aggregated insurance table
-create_query7= '''CREATE TABLE if not exists aggregated_insurance (States varchar(50),
+create_query1= '''CREATE TABLE if not exists aggregated_insurance (States varchar(50),
                                                                       Years int,
                                                                       Quarter int,
                                                                       Insurance_type varchar(50),
                                                                       Insurance_count bigint,
                                                                       Insurance_amount bigint
                                                                       )'''
-cursor.execute(create_query7)
+cursor.execute(create_query1)
 mydb.commit()
 
 for index,row in aggre_insurance.iterrows():
-    insert_query7 = '''INSERT INTO aggregated_insurance (States, Years, Quarter, Insurance_type, Insurance_count, Insurance_amount)
+    insert_query1 = '''INSERT INTO aggregated_insurance (States, Years, Quarter, Insurance_type, Insurance_count, Insurance_amount)
                                                         values(%s,%s,%s,%s,%s,%s)'''
     values = (row["States"],
               row["Years"],
@@ -392,22 +391,22 @@ for index,row in aggre_insurance.iterrows():
               row["Insurance_count"],
               row["Insurance_amount"]
               )
-    cursor.execute(insert_query7,values)
+    cursor.execute(insert_query1,values)
     mydb.commit()
 
 #aggregated transaction table
-create_query1 = '''CREATE TABLE if not exists aggregated_transaction (States varchar(50),
+create_query2 = '''CREATE TABLE if not exists aggregated_transaction (States varchar(50),
                                                                       Years int,
                                                                       Quarter int,
                                                                       Transaction_type varchar(50),
                                                                       Transaction_count bigint,
                                                                       Transaction_amount bigint
                                                                       )'''
-cursor.execute(create_query1)
+cursor.execute(create_query2)
 mydb.commit()
 
 for index,row in aggre_transaction.iterrows():
-    insert_query1 = '''INSERT INTO aggregated_transaction (States, Years, Quarter, Transaction_type, Transaction_count, Transaction_amount)
+    insert_query2 = '''INSERT INTO aggregated_transaction (States, Years, Quarter, Transaction_type, Transaction_count, Transaction_amount)
                                                         values(%s,%s,%s,%s,%s,%s)'''
     values = (row["States"],
               row["Years"],
@@ -416,21 +415,21 @@ for index,row in aggre_transaction.iterrows():
               row["Transaction_count"],
               row["Transaction_amount"]
               )
-    cursor.execute(insert_query1,values)
+    cursor.execute(insert_query2,values)
     mydb.commit()
 
 #aggregated user table
-create_query2 = '''CREATE TABLE if not exists aggregated_user (States varchar(50),
+create_query3 = '''CREATE TABLE if not exists aggregated_user (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
                                                                 Brands varchar(50),
                                                                 Transaction_count bigint,
                                                                 Percentage float)'''
-cursor.execute(create_query2)
+cursor.execute(create_query3)
 mydb.commit()
 
 for index,row in aggre_user.iterrows():
-    insert_query2 = '''INSERT INTO aggregated_user (States, Years, Quarter, Brands, Transaction_count, Percentage)
+    insert_query3 = '''INSERT INTO aggregated_user (States, Years, Quarter, Brands, Transaction_count, Percentage)
                                                     values(%s,%s,%s,%s,%s,%s)'''
     values = (row["States"],
               row["Years"],
@@ -438,25 +437,23 @@ for index,row in aggre_user.iterrows():
               row["Brands"],
               row["Transaction_count"],
               row["Percentage"])
-    cursor.execute(insert_query2,values)
+    cursor.execute(insert_query3,values)
     mydb.commit()
 
 #map_insurance_table
-create_query8 = '''CREATE TABLE if not exists map_insurance (States varchar(50),
+create_query4 = '''CREATE TABLE if not exists map_insurance (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
                                                                 District varchar(50),
                                                                 Transaction_count bigint,
                                                                 Transaction_amount float)'''
-cursor.execute(create_query8)
+cursor.execute(create_query4)
 mydb.commit()
 
 for index,row in map_insurance.iterrows():
-            insert_query8 = '''
-                INSERT INTO map_insurance (States, Years, Quarter, District, Transaction_count, Transaction_amount)
-                VALUES (%s, %s, %s, %s, %s, %s)
-
-            '''
+            insert_query4 = '''INSERT INTO map_insurance (States, Years, Quarter, District, Transaction_count, Transaction_amount)
+                               VALUES (%s, %s, %s, %s, %s, %s)'''
+    
             values = (
                 row['States'],
                 row['Years'],
@@ -465,25 +462,23 @@ for index,row in map_insurance.iterrows():
                 row['Transaction_count'],
                 row['Transaction_amount']
             )
-            cursor.execute(insert_query8,values)
+            cursor.execute(insert_query4,values)
             mydb.commit() 
 
 #map_transaction_table
-create_query3 = '''CREATE TABLE if not exists map_transaction (States varchar(50),
+create_query5 = '''CREATE TABLE if not exists map_transaction (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
                                                                 District varchar(50),
                                                                 Transaction_count bigint,
                                                                 Transaction_amount float)'''
-cursor.execute(create_query3)
+cursor.execute(create_query5)
 mydb.commit()
 
 for index,row in map_transaction.iterrows():
-            insert_query3 = '''
-                INSERT INTO map_Transaction (States, Years, Quarter, District, Transaction_count, Transaction_amount)
-                VALUES (%s, %s, %s, %s, %s, %s)
-
-            '''
+            insert_query5 = '''INSERT INTO map_Transaction (States, Years, Quarter, District, Transaction_count, Transaction_amount)
+                               VALUES (%s, %s, %s, %s, %s, %s)'''
+    
             values = (
                 row['States'],
                 row['Years'],
@@ -492,22 +487,22 @@ for index,row in map_transaction.iterrows():
                 row['Transaction_count'],
                 row['Transaction_amount']
             )
-            cursor.execute(insert_query3,values)
+            cursor.execute(insert_query5,values)
             mydb.commit() 
 
 
 #map_user_table
-create_query4 = '''CREATE TABLE if not exists map_user (States varchar(50),
+create_query6 = '''CREATE TABLE if not exists map_user (States varchar(50),
                                                         Years int,
                                                         Quarter int,
                                                         Districts varchar(50),
                                                         RegisteredUser bigint,
                                                         AppOpens bigint)'''
-cursor.execute(create_query4)
+cursor.execute(create_query6)
 mydb.commit()
 
 for index,row in map_user.iterrows():
-    insert_query4 = '''INSERT INTO map_user (States, Years, Quarter, Districts, RegisteredUser, AppOpens)
+    insert_query6 = '''INSERT INTO map_user (States, Years, Quarter, Districts, RegisteredUser, AppOpens)
                         values(%s,%s,%s,%s,%s,%s)'''
     values = (row["States"],
               row["Years"],
@@ -515,21 +510,21 @@ for index,row in map_user.iterrows():
               row["Districts"],
               row["RegisteredUser"],
               row["AppOpens"])
-    cursor.execute(insert_query4,values)
+    cursor.execute(insert_query6,values)
     mydb.commit()
 
 #top_insurance_table
-create_query9 = '''CREATE TABLE if not exists top_insurance (States varchar(50),
+create_query7 = '''CREATE TABLE if not exists top_insurance (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
                                                                 Pincodes int,
                                                                 Transaction_count bigint,
                                                                 Transaction_amount bigint)'''
-cursor.execute(create_query9)
+cursor.execute(create_query7)
 mydb.commit()
 
 for index,row in top_insur.iterrows():
-    insert_query9 = '''INSERT INTO top_insurance (States, Years, Quarter, Pincodes, Transaction_count, Transaction_amount)
+    insert_query7 = '''INSERT INTO top_insurance (States, Years, Quarter, Pincodes, Transaction_count, Transaction_amount)
                                                     values(%s,%s,%s,%s,%s,%s)'''
     values = (row["States"],
               row["Years"],
@@ -537,21 +532,22 @@ for index,row in top_insur.iterrows():
               row["Pincodes"],
               row["Transaction_count"],
               row["Transaction_amount"])
-    cursor.execute(insert_query9,values)
+    
+    cursor.execute(insert_query7,values)
     mydb.commit()
 
 #top_transaction_table
-create_query5 = '''CREATE TABLE if not exists top_transaction (States varchar(50),
+create_query8 = '''CREATE TABLE if not exists top_transaction (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
                                                                 pincodes int,
                                                                 Transaction_count bigint,
                                                                 Transaction_amount bigint)'''
-cursor.execute(create_query5)
+cursor.execute(create_query8)
 mydb.commit()
 
 for index,row in top_transaction.iterrows():
-    insert_query5 = '''INSERT INTO top_transaction (States, Years, Quarter, Pincodes, Transaction_count, Transaction_amount)
+    insert_query8 = '''INSERT INTO top_transaction (States, Years, Quarter, Pincodes, Transaction_count, Transaction_amount)
                                                     values(%s,%s,%s,%s,%s,%s)'''
     values = (row["States"],
               row["Years"],
@@ -559,28 +555,29 @@ for index,row in top_transaction.iterrows():
               row["Pincodes"],
               row["Transaction_count"],
               row["Transaction_amount"])
-    cursor.execute(insert_query5,values)
+    
+    cursor.execute(insert_query8,values)
     mydb.commit()
 
 #top_user_table
-create_query6 = '''CREATE TABLE if not exists top_user (States varchar(50),
+create_query9 = '''CREATE TABLE if not exists top_user (States varchar(50),
                                                         Years int,
                                                         Quarter int,
                                                         Pincodes int,
                                                         RegisteredUser bigint
                                                         )'''
-cursor.execute(create_query6)
+cursor.execute(create_query9)
 mydb.commit()
 
 for index,row in top_user.iterrows():
-    insert_query6 = '''INSERT INTO top_user (States, Years, Quarter, Pincodes, RegisteredUser)
+    insert_query9 = '''INSERT INTO top_user (States, Years, Quarter, Pincodes, RegisteredUser)
                                             values(%s,%s,%s,%s,%s)'''
     values = (row["States"],
               row["Years"],
               row["Quarter"],
               row["Pincodes"],
               row["RegisteredUser"])
-    cursor.execute(insert_query6,values)
+    cursor.execute(insert_query9,values)
     mydb.commit()
 
 
@@ -595,61 +592,77 @@ mydb = psycopg2.connect(host = "localhost",
 cursor = mydb.cursor()
 
 #Aggregated_insurance
+
 cursor.execute("select * from aggregated_insurance;")
 mydb.commit()
-table7 = cursor.fetchall()
 
-Aggre_insurance = pd.DataFrame(table7,columns = ("States", "Years", "Quarter", "Transaction_type", "Transaction_count","Transaction_amount"))
+table1 = cursor.fetchall()
+Aggre_insurance = pd.DataFrame(table1,columns = ("States", "Years", "Quarter", "Transaction_type", "Transaction_count","Transaction_amount"))
 
 #Aggregated_transsaction
+
 cursor.execute("select * from aggregated_transaction;")
 mydb.commit()
-table1 = cursor.fetchall()
-Aggre_transaction = pd.DataFrame(table1,columns = ("States", "Years", "Quarter", "Transaction_type", "Transaction_count", "Transaction_amount"))
+
+table2 = cursor.fetchall()
+Aggre_transaction = pd.DataFrame(table2,columns = ("States", "Years", "Quarter", "Transaction_type", "Transaction_count", "Transaction_amount"))
 
 #Aggregated_user
+
 cursor.execute("select * from aggregated_user")
 mydb.commit()
-table2 = cursor.fetchall()
-Aggre_user = pd.DataFrame(table2,columns = ("States", "Years", "Quarter", "Brands", "Transaction_count", "Percentage"))
+
+table3 = cursor.fetchall()
+Aggre_user = pd.DataFrame(table3,columns = ("States", "Years", "Quarter", "Brands", "Transaction_count", "Percentage"))
 
 #Map_insurance
+
 cursor.execute("select * from map_insurance")
 mydb.commit()
-table3 = cursor.fetchall()
 
-Map_insurance = pd.DataFrame(table3,columns = ("States", "Years", "Quarter", "Districts", "Transaction_count","Transaction_amount"))
+table4 = cursor.fetchall()
+
+Map_insurance = pd.DataFrame(table4,columns = ("States", "Years", "Quarter", "Districts", "Transaction_count","Transaction_amount"))
 
 #Map_transaction
+
 cursor.execute("select * from map_transaction")
 mydb.commit()
-table3 = cursor.fetchall()
-Map_transaction = pd.DataFrame(table3,columns = ("States", "Years", "Quarter", "Districts", "Transaction_count", "Transaction_amount"))
+
+table5 = cursor.fetchall()
+Map_transaction = pd.DataFrame(table5,columns = ("States", "Years", "Quarter", "Districts", "Transaction_count", "Transaction_amount"))
 
 #Map_user
+
 cursor.execute("select * from map_user")
 mydb.commit()
-table4 = cursor.fetchall()
-Map_user = pd.DataFrame(table4,columns = ("States", "Years", "Quarter", "Districts", "RegisteredUser", "AppOpens"))
+
+table6 = cursor.fetchall()
+Map_user = pd.DataFrame(table6,columns = ("States", "Years", "Quarter", "Districts", "RegisteredUser", "AppOpens"))
 
 #Top_insurance
+
 cursor.execute("select * from top_insurance")
 mydb.commit()
-table5 = cursor.fetchall()
 
-Top_insurance = pd.DataFrame(table5,columns = ("States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"))
+table7 = cursor.fetchall()
+Top_insurance = pd.DataFrame(table7,columns = ("States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"))
 
 #Top_transaction
+
 cursor.execute("select * from top_transaction")
 mydb.commit()
-table5 = cursor.fetchall()
-Top_transaction = pd.DataFrame(table5,columns = ("States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"))
+
+table8 = cursor.fetchall()
+Top_transaction = pd.DataFrame(table8,columns = ("States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"))
 
 #Top_user
+
 cursor.execute("select * from top_user")
 mydb.commit()
-table6 = cursor.fetchall()
-Top_user = pd.DataFrame(table6, columns = ("States", "Years", "Quarter", "Pincodes", "RegisteredUser"))
+
+table9 = cursor.fetchall()
+Top_user = pd.DataFrame(table9, columns = ("States", "Years", "Quarter", "Pincodes", "RegisteredUser"))
 
 
 
@@ -660,6 +673,8 @@ def Aggre_insurance_Y(df,year):
     aiyg=aiy.groupby("States")[["Transaction_count", "Transaction_amount"]].sum()
     aiyg.reset_index(inplace= True)
 
+    tab1, tab2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
+_____________________________________________________________________________________________________________________________________________________________
     col1,col2= st.columns(2)
     with col1:
 
