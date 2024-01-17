@@ -6,6 +6,7 @@ import requests
 import psycopg2
 import plotly.express as px
 from streamlit_option_menu import option_menu
+from streamlit_extras.let_it_rain import rain
 
 
 #aggre_insurance
@@ -673,8 +674,8 @@ def Aggre_insurance_Y(df,year):
     aiyg=aiy.groupby("States")[["Transaction_count", "Transaction_amount"]].sum()
     aiyg.reset_index(inplace= True)
 
-    tab1, tab2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
-_____________________________________________________________________________________________________________________________________________________________
+    #col1, col2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
+
     col1,col2= st.columns(2)
     with col1:
 
@@ -686,6 +687,8 @@ ________________________________________________________________________________
         fig_count= px.bar(aiyg, x="States", y= "Transaction_count",title= f"{year} TRANSACTION COUNT",
                           width=600, height= 650, color_discrete_sequence=px.colors.sequential.Bluered_r)
         st.plotly_chart(fig_count)
+
+    #tab1, tab2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
 
     col1,col2= st.columns(2)
     with col1:
@@ -727,6 +730,8 @@ def Aggre_insurance_Y_Q(df,quarter):
     aiyqg= aiyq.groupby("States")[["Transaction_count", "Transaction_amount"]].sum()
     aiyqg.reset_index(inplace= True)
 
+    #2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
+    
     col1,col2= st.columns(2)
 
     with col1:
@@ -741,6 +746,8 @@ def Aggre_insurance_Y_Q(df,quarter):
                             color_discrete_sequence=px.colors.sequential.Cividis_r)
         st.plotly_chart(fig_q_count)
 
+    
+    #tab1, tab2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
     col1,col2= st.columns(2)
     with col1:
 
@@ -758,6 +765,7 @@ def Aggre_insurance_Y_Q(df,quarter):
         fig_india_1.update_geos(visible =False)
         
         st.plotly_chart(fig_india_1)
+    
     with col2:
 
         fig_india_2= px.choropleth(aiyqg, geojson= data1, locations= "States", featureidkey= "properties.ST_NM",
@@ -778,6 +786,7 @@ def Aggre_Transaction_type(df, state):
     agttg= df_state.groupby("Transaction_type")[["Transaction_count", "Transaction_amount"]].sum()
     agttg.reset_index(inplace= True)
 
+    #tab1, tab2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
     col1,col2= st.columns(2)
     with col1:
 
@@ -831,6 +840,7 @@ def map_insure_plot_1(df,state):
     miysg= miys.groupby("Districts")[["Transaction_count","Transaction_amount"]].sum()
     miysg.reset_index(inplace= True)
 
+    #tab1, tab2 = st.tabs(['DISTRICTS TRANSACTION AMOUNT', 'DISTRICTS TRANSACTION COUNT'])
     col1,col2= st.columns(2)
     with col1:
         fig_map_bar_1= px.bar(miysg, x= "Districts", y= "Transaction_amount",
@@ -850,6 +860,7 @@ def map_insure_plot_2(df,state):
     miysg= miys.groupby("Districts")[["Transaction_count","Transaction_amount"]].sum()
     miysg.reset_index(inplace= True)
 
+    #tab1, tab2 = st.tabs(['DISTRICTS TRANSACTION AMOUNT', 'DISTRICTS TRANSACTION COUNT'])
     col1,col2= st.columns(2)
     with col1:
         fig_map_pie_1= px.pie(miysg, names= "Districts", values= "Transaction_amount",
@@ -895,6 +906,7 @@ def map_user_plot_3(df, state):
     muyqsg= muyqs.groupby("Districts")[["RegisteredUser", "AppOpens"]].sum()
     muyqsg.reset_index(inplace= True)
 
+    #tab1, tab2 = st.tabs(['REGISTERED USER', 'APPOPENS'])
     col1,col2= st.columns(2)
     with col1:
         fig_map_user_plot_1= px.bar(muyqsg, x= "RegisteredUser",y= "Districts",orientation="h",
@@ -1029,81 +1041,106 @@ def ques10():
 
 #Streamlit part
 
-st.set_page_config(layout= "wide")
-
-st.title("PHONEPE DATA VISUALIZATION AND EXPLORATION")
-st.write("")
+st.set_page_config(page_title="PHONEPE", page_icon="📱",layout= "wide")
 
 with st.sidebar:
-    select= option_menu("Main Menu",["Home", "Data Exploration", "Top Charts"])
+    select= option_menu("Main Menu",["🏡Home", "📑Data Overview","📖Data Insights & Exploration", "📊Top Charts", '📲Exit'])
 
 
-if select == "Home":
+if select == "🏡Home":
+    st.header(":violet[📱PHONEPE]")
+    st.subheader("INDIA'S BEST TRANSACTION APP")
+    st.subheader("DOMAIN: :green[Fintech]")
+    st.subheader("TECHNOLOGIES-USED")
+    st.markdown(":pink[Github Cloning, Python, Pandas, PostgreSQL, Streamlit, and Plotly]")
+    st.subheader("OVERVIEW")
+    st.markdown("PhonePe  is an Indian digital payments and financial technology company headquartered in Bengaluru, Karnataka, India. PhonePe was founded in December 2015, by Sameer Nigam, Rahul Chari and Burzin Engineer. The PhonePe app, based on the Unified Payments Interface (UPI), went live in August 2016. It is owned by Flipkart, a subsidiary of Walmart.")
 
-    col1,col2= st.columns(2)
+    st.write("****FEATURES****")
+    st.write("****Credit & Debit card linking****")
+    st.write("****Bank Balance check****")
+    st.write("****Money Storage****")
+    st.write("****PIN Authorization****")
+    st.download_button("DOWNLOAD THE APP NOW", "https://www.phonepe.com/app-download/")
 
-    with col1:
-        st.header("PHONEPE")
-        st.subheader("INDIA'S BEST TRANSACTION APP")
-        st.markdown("PhonePe  is an Indian digital payments and financial technology company")
-        st.write("****FEATURES****")
-        st.write("****Credit & Debit card linking****")
-        st.write("****Bank Balance check****")
-        st.write("****Money Storage****")
-        st.write("****PIN Authorization****")
-        st.download_button("DOWNLOAD THE APP NOW", "https://www.phonepe.com/app-download/")
-    with col2:
-        video_file1 = open('ad_video.mp4', 'rb')
-        video_bytes = video_file1.read()
+    video_file1 = open('ad_video.mp4', 'rb')
+    video_bytes = video_file1.read()
 
-        st.video(video_bytes)
+    st.video(video_bytes)
         # st.video("D:\\phonepe_pulse\\ad_video.mp4")
 
-    col3,col4= st.columns(2)
+
+if select == "📑Data Overview":
+
+    st.write('')
+    st.header('PhonePe Pulse Data: Insights for India')
+    st.write('')
+
+    st.subheader('Key Dimensions:')
+    st.write('- State - All States in India')
+    st.write('- Year -  2018 to 2023')
+    st.write('- Quarter - Q1 (Jan to Mar), Q2 (Apr to June), Q3 (July to Sep), Q4 (Oct to Dec)')
+
+    st.subheader('Aggregated Transaction:')
+    st.write('Transaction data broken down by type of payments at state level.')
+    st.write('- Recharge & bill payments')
+    st.write('- Peer-to-peer payments')
+    st.write('- Merchant payments')
+    st.write('- Financial Services')
+    st.write('- Others')
+
+    st.subheader('Aggregated User:')
+    st.write('Users data broken down by devices at state level.')
     
+    col1,col2,col3,col4 = st.columns(4)
+    
+    with col1:
+        st.write(':small_blue_diamond: Apple')
+        st.write(':small_blue_diamond: Asus')
+        st.write(':small_blue_diamond: Coolpad')
+        st.write(':small_blue_diamond: Gionee')
+        st.write(':small_blue_diamond: HMD Global')
+    with col2:
+        st.write(':small_blue_diamond: Huawei')
+        st.write(':small_blue_diamond: Infinix')
+        st.write(':small_blue_diamond: Lava')
+        st.write(':small_blue_diamond: Lenovo')
+        st.write(':small_blue_diamond: Lyf')
     with col3:
-        video_file2 = open('phonepe_motion.mp4', 'rb')
-        video_bytes2 = video_file2.read()
-
-        st.video(video_bytes2)
-        #st.video("D:\\phonepe_pulse\\phonepe_motion.mp4")
-
+        st.write(':small_blue_diamond: Micromax')
+        st.write(':small_blue_diamond: Motorola')
+        st.write(':small_blue_diamond: OnePlus')
+        st.write(':small_blue_diamond: Oppo')
+        st.write(':small_blue_diamond: Realme')
     with col4:
-        st.write("****Easy Transactions****")
-        st.write("****One App For All Your Payments****")
-        st.write("****Your Bank Account Is All You Need****")
-        st.write("****Multiple Payment Modes****")
-        st.write("****PhonePe Merchants****")
-        st.write("****Multiple Ways To Pay****")
-        st.write("****1.Direct Transfer & More****")
-        st.write("****2.QR Code****")
-        st.write("****Earn Great Rewards****")
+        st.write(':small_blue_diamond: Samsung')
+        st.write(':small_blue_diamond: Tecno')
+        st.write(':small_blue_diamond: Vivo')
+        st.write(':small_blue_diamond: Xiaomi')
+        st.write(':small_blue_diamond: Others')
 
-    col5,col6= st.columns(2)
+    st.subheader('Map Transaction:')
+    st.write('- Total number of transactions at the state / district level.')
+    st.write('- Total value of all transactions at the state / district level.')
 
-    with col5:
-        st.markdown(" ")
-        st.markdown(" ")
-        st.markdown(" ")
-        st.markdown(" ")
-        st.markdown(" ")
-        st.markdown(" ")
-        st.markdown(" ")
-        st.markdown(" ")
-        st.markdown(" ")
-        st.write("****No Wallet Top-Up Required****")
-        st.write("****Pay Directly From Any Bank To Any Bank A/C****")
-        st.write("****Instantly & Free****")
+    st.subheader('Map User:')
+    st.write('- Total number of registered users at the state / district level.')
+    st.write('- Total number of app opens by these registered users at the state / district level.')
 
-    with col6:
-        video_file3 = open('top5_states.mp4', 'rb')
-        video_bytes3 = video_file3.read()
+    st.subheader('Top Transaction:')
+    st.write('Explore the most number of the transactions happened for a selected Year-Quarter combination')
+    st.write('- Top 10 States')
+    st.write('- Top 10 Districts')
+    st.write('- Top 10 Pincodes')
 
-        st.video(video_bytes3)
-        #st.video("D:\\phonepe_pulse\\top5_states.mp4")
+    st.subheader('Top User:')
+    st.write('Explore the most number of registered users for a selected Year-Quarter combination')
+    st.write('- Top 10 States')
+    st.write('- Top 10 Districts')
+    st.write('- Top 10 Pincodes')
 
 
-if select == "Data Exploration":
+if select == "📖Data Insights & Exploration":
     tab1, tab2, tab3= st.tabs(["Aggregated Analysis", "Map Analysis", "Top Analysis"])
 
     with tab1:
@@ -1111,12 +1148,14 @@ if select == "Data Exploration":
 
         if method == "Insurance Analysis":
             col1,col2= st.columns(2)
+            
             with col1:
                 years= st.slider("**Select the Year**", Aggre_insurance["Years"].min(), Aggre_insurance["Years"].max(),Aggre_insurance["Years"].min())
 
             df_agg_insur_Y= Aggre_insurance_Y(Aggre_insurance,years)
             
             col1,col2= st.columns(2)
+            
             with col1:
                 quarters= st.slider("**Select the Quarter**", df_agg_insur_Y["Quarter"].min(), df_agg_insur_Y["Quarter"].max(),df_agg_insur_Y["Quarter"].min())
 
@@ -1125,12 +1164,14 @@ if select == "Data Exploration":
             
         elif method == "Transaction Analysis":
             col1,col2= st.columns(2)
+            
             with col1:
                 years_at= st.slider("**Select the Year**", Aggre_transaction["Years"].min(), Aggre_transaction["Years"].max(),Aggre_transaction["Years"].min())
 
             df_agg_tran_Y= Aggre_insurance_Y(Aggre_transaction,years_at)
             
             col1,col2= st.columns(2)
+            
             with col1:
                 quarters_at= st.slider("**Select the Quarter**", df_agg_tran_Y["Quarter"].min(), df_agg_tran_Y["Quarter"].max(),df_agg_tran_Y["Quarter"].min())
 
@@ -1152,29 +1193,35 @@ if select == "Data Exploration":
             state_au= st.selectbox("**Select the State_AU**",agg_user_Y["States"].unique())
             Aggre_user_plot_3(agg_user_Y_Q,state_au)
 
+        st.balloons()
+
     with tab2:
         method_map = st.radio("**Select the Analysis Method(MAP)**",["Map Insurance Analysis", "Map Transaction Analysis", "Map User Analysis"])
 
         if method_map == "Map Insurance Analysis":
             col1,col2= st.columns(2)
+            
             with col1:
                 years_m1= st.slider("**Select the Year_mi**", Map_insurance["Years"].min(), Map_insurance["Years"].max(),Map_insurance["Years"].min())
 
             df_map_insur_Y= Aggre_insurance_Y(Map_insurance,years_m1)
 
             col1,col2= st.columns(2)
+            
             with col1:
                 state_m1= st.selectbox("Select the State_mi", df_map_insur_Y["States"].unique())
 
             map_insure_plot_1(df_map_insur_Y,state_m1)
             
             col1,col2= st.columns(2)
+            
             with col1:
                 quarters_m1= st.slider("**Select the Quarter_mi**", df_map_insur_Y["Quarter"].min(), df_map_insur_Y["Quarter"].max(),df_map_insur_Y["Quarter"].min())
 
             df_map_insur_Y_Q= Aggre_insurance_Y_Q(df_map_insur_Y, quarters_m1)
 
             col1,col2= st.columns(2)
+            
             with col1:
                 state_m2= st.selectbox("Select the State_miy", df_map_insur_Y_Q["States"].unique())            
             
@@ -1182,24 +1229,28 @@ if select == "Data Exploration":
 
         elif method_map == "Map Transaction Analysis":
             col1,col2= st.columns(2)
+            
             with col1:
                 years_m2= st.slider("**Select the Year_mi**", Map_transaction["Years"].min(), Map_transaction["Years"].max(),Map_transaction["Years"].min())
 
             df_map_tran_Y= Aggre_insurance_Y(Map_transaction, years_m2)
 
             col1,col2= st.columns(2)
+            
             with col1:
                 state_m3= st.selectbox("Select the State_mi", df_map_tran_Y["States"].unique())
 
             map_insure_plot_1(df_map_tran_Y,state_m3)
             
             col1,col2= st.columns(2)
+            
             with col1:
                 quarters_m2= st.slider("**Select the Quarter_mi**", df_map_tran_Y["Quarter"].min(), df_map_tran_Y["Quarter"].max(),df_map_tran_Y["Quarter"].min())
 
             df_map_tran_Y_Q= Aggre_insurance_Y_Q(df_map_tran_Y, quarters_m2)
 
             col1,col2= st.columns(2)
+            
             with col1:
                 state_m4= st.selectbox("Select the State_miy", df_map_tran_Y_Q["States"].unique())            
             
@@ -1207,32 +1258,38 @@ if select == "Data Exploration":
 
         elif method_map == "Map User Analysis":
             col1,col2= st.columns(2)
+            
             with col1:
                 year_mu1= st.selectbox("**Select the Year_mu**",Map_user["Years"].unique())
             map_user_Y= map_user_plot_1(Map_user, year_mu1)
 
             col1,col2= st.columns(2)
+            
             with col1:
                 quarter_mu1= st.selectbox("**Select the Quarter_mu**",map_user_Y["Quarter"].unique())
             map_user_Y_Q= map_user_plot_2(map_user_Y,quarter_mu1)
 
             col1,col2= st.columns(2)
+            
             with col1:
                 state_mu1= st.selectbox("**Select the State_mu**",map_user_Y_Q["States"].unique())
             map_user_plot_3(map_user_Y_Q, state_mu1)
+
+        st.snow()
 
     with tab3:
         method_top = st.radio("**Select the Analysis Method(TOP)**",["Top Insurance Analysis", "Top Transaction Analysis", "Top User Analysis"])
 
         if method_top == "Top Insurance Analysis":
             col1,col2= st.columns(2)
+            
             with col1:
                 years_t1= st.slider("**Select the Year_ti**", Top_insurance["Years"].min(), Top_insurance["Years"].max(),Top_insurance["Years"].min())
  
             df_top_insur_Y= Aggre_insurance_Y(Top_insurance,years_t1)
-
             
             col1,col2= st.columns(2)
+ 
             with col1:
                 quarters_t1= st.slider("**Select the Quarter_ti**", df_top_insur_Y["Quarter"].min(), df_top_insur_Y["Quarter"].max(),df_top_insur_Y["Quarter"].min())
 
@@ -1241,6 +1298,7 @@ if select == "Data Exploration":
         
         elif method_top == "Top Transaction Analysis":
             col1,col2= st.columns(2)
+            
             with col1:
                 years_t2= st.slider("**Select the Year_tt**", Top_transaction["Years"].min(), Top_transaction["Years"].max(),Top_transaction["Years"].min())
  
@@ -1248,6 +1306,7 @@ if select == "Data Exploration":
 
             
             col1,col2= st.columns(2)
+            
             with col1:
                 quarters_t2= st.slider("**Select the Quarter_tt**", df_top_tran_Y["Quarter"].min(), df_top_tran_Y["Quarter"].max(),df_top_tran_Y["Quarter"].min())
 
@@ -1255,19 +1314,30 @@ if select == "Data Exploration":
 
         elif method_top == "Top User Analysis":
             col1,col2= st.columns(2)
+            
             with col1:
                 years_t3= st.selectbox("**Select the Year_tu**", Top_user["Years"].unique())
 
             df_top_user_Y= top_user_plot_1(Top_user,years_t3)
 
             col1,col2= st.columns(2)
+            
             with col1:
                 state_t3= st.selectbox("**Select the State_tu**", df_top_user_Y["States"].unique())
 
             df_top_user_Y_S= top_user_plot_2(df_top_user_Y,state_t3)
 
+        def stars():
+            rain(
+                emoji="⭐✴",
+                font_size=55,
+                falling_speed=7,
+                animation_length="infinite",
+            )
+        stars()        
 
-if select == "Top Charts":
+
+if select == "📊Top Charts":
 
     ques= st.selectbox("**Select the Question**",('Top Brands Of Mobiles Used','States With Lowest Trasaction Amount',
                                   'Districts With Highest Transaction Amount','Top 10 Districts With Lowest Transaction Amount',
@@ -1304,3 +1374,8 @@ if select == "Top Charts":
 
     elif ques=="Top 50 Districts With Lowest Transaction Amount":
         ques10()
+
+
+if select == '📲Exit':
+        st.success('🙏Thank you for your time. Exiting the application')
+        
