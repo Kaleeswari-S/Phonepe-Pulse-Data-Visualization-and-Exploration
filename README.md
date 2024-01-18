@@ -1,4 +1,4 @@
-# Phonepe-Pulse-Data-Visualization-and-Exploration
+# 📱 Phonepe-Pulse-Data-Visualization-and-Exploration
 ## Introduction
 PhonePe has become a leader among digital payment platforms, serving millions of users for their daily transactions. Known for its easy-to-use design, fast and secure payment processing, and creative features, PhonePe has gained praise and recognition in the industry. The PhonePe Pulse Data Visualization and Exploration project aims to gather valuable information from PhonePe's GitHub repository, process the data, and present it using an interactive dashboard that's visually appealing. This is accomplished using Python, Streamlit, and Plotly.
 
@@ -147,12 +147,12 @@ To Run the Application one can run the command mentioned below.
 
   > streamlit run phone_pe.py
 
-### Project Demo Video: 
+### 📹 Project Demo Video: 
 
 ## Contributing
 Contributions to this project are welcome! If you encounter any issues or have suggestions for improvements, please feel free to submit a pull request.
 
-## Contact:
+## @ Contact:
 
 📧 Email: kaleeswariramkumar25@gmail.com 
 
