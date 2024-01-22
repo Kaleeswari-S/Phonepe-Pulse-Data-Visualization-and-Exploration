@@ -1,3 +1,5 @@
+#REUIRED LIBRARIES
+
 import json
 import os
 import streamlit as st
@@ -10,6 +12,7 @@ from streamlit_extras.let_it_rain import rain
 
 
 #aggre_insurance
+
 path1= "D:/phonepe_pulse/pulse/data/aggregated/insurance/country/india/state/"
 
 agg_insur_list= os.listdir(path1)
@@ -50,6 +53,7 @@ aggre_insurance['States'] = aggre_insurance['States'].str.replace("Dadra & Nagar
 
 
 #aggre_transaction
+
 path2 = "D:/phonepe_pulse/pulse/data/aggregated/transaction/country/india/state/"
          
 agg_tran_list = os.listdir(path2)
@@ -88,6 +92,7 @@ aggre_transaction["States"] = aggre_transaction["States"].str.title()
 aggre_transaction['States'] = aggre_transaction['States'].str.replace("Dadra & Nagar Haveli & Daman & Diu", "Dadra and Nagar Haveli and Daman and Diu")
 
 #aggre_user
+
 path3 = "D:/phonepe_pulse/pulse/data/aggregated/user/country/india/state/"
          
 agg_user_list = os.listdir(path3)
@@ -131,6 +136,7 @@ aggre_user["States"] = aggre_user["States"].str.title()
 aggre_user['States'] = aggre_user['States'].str.replace("Dadra & Nagar Haveli & Daman & Diu", "Dadra and Nagar Haveli and Daman and Diu")
 
 #map_insurance
+
 path4= "D:/phonepe_pulse/pulse/data/map/insurance/hover/country/india/state/"
 
 map_insur_list= os.listdir(path4)
@@ -171,6 +177,7 @@ map_insurance['States'] = map_insurance['States'].str.replace("Dadra & Nagar Hav
 
 
 #map_transaction
+
 path5 = "D:/phonepe_pulse/pulse/data/map/transaction/hover/country/india/state/"
 map_tran_list = os.listdir(path5)
 
@@ -209,6 +216,7 @@ map_transaction['States'] = map_transaction['States'].str.replace("Dadra & Nagar
 
                 
 #map_user
+
 path6 = "D:/phonepe_pulse/pulse/data/map/user/hover/country/india/state/"
 
 map_user_list = os.listdir(path6)
@@ -245,6 +253,7 @@ map_user["States"] = map_user["States"].str.replace("andaman-&-nicobar-islands",
 map_user["States"] = map_user["States"].str.replace("-"," ")
 map_user["States"] = map_user["States"].str.title()
 map_user['States'] = map_user['States'].str.replace("Dadra & Nagar Haveli & Daman & Diu", "Dadra and Nagar Haveli and Daman and Diu")
+
 
 #top_insurance
 
@@ -287,6 +296,7 @@ top_insur['States'] = top_insur['States'].str.replace("Dadra & Nagar Haveli & Da
   
 
 #top_transaction
+
 path8 = "D:/phonepe_pulse/pulse/data/top/transaction/country/india/state/"
 top_tran_list = os.listdir(path8)
 
@@ -325,6 +335,7 @@ top_transaction['States'] = top_transaction['States'].str.replace("Dadra & Nagar
 
 
 #top_user
+
 path9 = "D:/phonepe_pulse/pulse/data/top/user/country/india/state/"
 
 top_user_list = os.listdir(path9)
@@ -363,6 +374,7 @@ top_user['States'] = top_user['States'].str.replace("Dadra & Nagar Haveli & Dama
 
 #Table Creation
 #pgsql connection
+
 mydb = psycopg2.connect(host = "localhost",
                         user = "postgres",
                         password = "ram7",
@@ -371,7 +383,9 @@ mydb = psycopg2.connect(host = "localhost",
                         )
 cursor = mydb.cursor()
 
+
 #aggregated insurance table
+
 create_query1= '''CREATE TABLE if not exists aggregated_insurance (States varchar(50),
                                                                       Years int,
                                                                       Quarter int,
@@ -395,7 +409,9 @@ for index,row in aggre_insurance.iterrows():
     cursor.execute(insert_query1,values)
     mydb.commit()
 
+
 #aggregated transaction table
+
 create_query2 = '''CREATE TABLE if not exists aggregated_transaction (States varchar(50),
                                                                       Years int,
                                                                       Quarter int,
@@ -419,7 +435,9 @@ for index,row in aggre_transaction.iterrows():
     cursor.execute(insert_query2,values)
     mydb.commit()
 
+
 #aggregated user table
+
 create_query3 = '''CREATE TABLE if not exists aggregated_user (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
@@ -441,7 +459,9 @@ for index,row in aggre_user.iterrows():
     cursor.execute(insert_query3,values)
     mydb.commit()
 
+
 #map_insurance_table
+
 create_query4 = '''CREATE TABLE if not exists map_insurance (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
@@ -466,7 +486,9 @@ for index,row in map_insurance.iterrows():
             cursor.execute(insert_query4,values)
             mydb.commit() 
 
+
 #map_transaction_table
+
 create_query5 = '''CREATE TABLE if not exists map_transaction (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
@@ -493,6 +515,7 @@ for index,row in map_transaction.iterrows():
 
 
 #map_user_table
+
 create_query6 = '''CREATE TABLE if not exists map_user (States varchar(50),
                                                         Years int,
                                                         Quarter int,
@@ -514,7 +537,9 @@ for index,row in map_user.iterrows():
     cursor.execute(insert_query6,values)
     mydb.commit()
 
+
 #top_insurance_table
+
 create_query7 = '''CREATE TABLE if not exists top_insurance (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
@@ -537,7 +562,9 @@ for index,row in top_insur.iterrows():
     cursor.execute(insert_query7,values)
     mydb.commit()
 
+
 #top_transaction_table
+
 create_query8 = '''CREATE TABLE if not exists top_transaction (States varchar(50),
                                                                 Years int,
                                                                 Quarter int,
@@ -560,7 +587,9 @@ for index,row in top_transaction.iterrows():
     cursor.execute(insert_query8,values)
     mydb.commit()
 
+
 #top_user_table
+
 create_query9 = '''CREATE TABLE if not exists top_user (States varchar(50),
                                                         Years int,
                                                         Quarter int,
@@ -584,6 +613,7 @@ for index,row in top_user.iterrows():
 
 #CREATE DATAFRAMES FROM SQL
 #sql connection
+
 mydb = psycopg2.connect(host = "localhost",
                         user = "postgres",
                         password = "ram7",
@@ -591,6 +621,7 @@ mydb = psycopg2.connect(host = "localhost",
                         port = "5432"
                         )
 cursor = mydb.cursor()
+
 
 #Aggregated_insurance
 
@@ -600,6 +631,7 @@ mydb.commit()
 table1 = cursor.fetchall()
 Aggre_insurance = pd.DataFrame(table1,columns = ("States", "Years", "Quarter", "Transaction_type", "Transaction_count","Transaction_amount"))
 
+
 #Aggregated_transsaction
 
 cursor.execute("select * from aggregated_transaction;")
@@ -608,6 +640,7 @@ mydb.commit()
 table2 = cursor.fetchall()
 Aggre_transaction = pd.DataFrame(table2,columns = ("States", "Years", "Quarter", "Transaction_type", "Transaction_count", "Transaction_amount"))
 
+
 #Aggregated_user
 
 cursor.execute("select * from aggregated_user")
@@ -615,6 +648,7 @@ mydb.commit()
 
 table3 = cursor.fetchall()
 Aggre_user = pd.DataFrame(table3,columns = ("States", "Years", "Quarter", "Brands", "Transaction_count", "Percentage"))
+
 
 #Map_insurance
 
@@ -625,6 +659,7 @@ table4 = cursor.fetchall()
 
 Map_insurance = pd.DataFrame(table4,columns = ("States", "Years", "Quarter", "Districts", "Transaction_count","Transaction_amount"))
 
+
 #Map_transaction
 
 cursor.execute("select * from map_transaction")
@@ -632,6 +667,7 @@ mydb.commit()
 
 table5 = cursor.fetchall()
 Map_transaction = pd.DataFrame(table5,columns = ("States", "Years", "Quarter", "Districts", "Transaction_count", "Transaction_amount"))
+
 
 #Map_user
 
@@ -641,6 +677,7 @@ mydb.commit()
 table6 = cursor.fetchall()
 Map_user = pd.DataFrame(table6,columns = ("States", "Years", "Quarter", "Districts", "RegisteredUser", "AppOpens"))
 
+
 #Top_insurance
 
 cursor.execute("select * from top_insurance")
@@ -649,6 +686,7 @@ mydb.commit()
 table7 = cursor.fetchall()
 Top_insurance = pd.DataFrame(table7,columns = ("States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"))
 
+
 #Top_transaction
 
 cursor.execute("select * from top_transaction")
@@ -656,6 +694,7 @@ mydb.commit()
 
 table8 = cursor.fetchall()
 Top_transaction = pd.DataFrame(table8,columns = ("States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"))
+
 
 #Top_user
 
@@ -674,8 +713,6 @@ def Aggre_insurance_Y(df,year):
     aiyg=aiy.groupby("States")[["Transaction_count", "Transaction_amount"]].sum()
     aiyg.reset_index(inplace= True)
 
-    #col1, col2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
-
     col1,col2= st.columns(2)
     with col1:
 
@@ -687,8 +724,6 @@ def Aggre_insurance_Y(df,year):
         fig_count= px.bar(aiyg, x="States", y= "Transaction_count",title= f"{year} TRANSACTION COUNT",
                           width=600, height= 650, color_discrete_sequence=px.colors.sequential.Agsunset)
         st.plotly_chart(fig_count)
-
-    #tab1, tab2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
 
     col1,col2= st.columns(2)
     with col1:
@@ -729,8 +764,6 @@ def Aggre_insurance_Y_Q(df,quarter):
 
     aiyqg= aiyq.groupby("States")[["Transaction_count", "Transaction_amount"]].sum()
     aiyqg.reset_index(inplace= True)
-
-    #2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
     
     col1,col2= st.columns(2)
 
@@ -745,9 +778,7 @@ def Aggre_insurance_Y_Q(df,quarter):
                             title= f"{aiyq['Years'].min()} AND {quarter} TRANSACTION COUNT",width= 600, height=650,
                             color_discrete_sequence=px.colors.sequential.Agsunset)
         st.plotly_chart(fig_q_count)
-
     
-    #tab1, tab2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
     col1,col2= st.columns(2)
     with col1:
 
@@ -779,6 +810,7 @@ def Aggre_insurance_Y_Q(df,quarter):
     
     return aiyq
 
+
 def Aggre_Transaction_type(df, state):
     df_state= df[df["States"] == state]
     df_state.reset_index(drop= True, inplace= True)
@@ -786,7 +818,6 @@ def Aggre_Transaction_type(df, state):
     agttg= df_state.groupby("Transaction_type")[["Transaction_count", "Transaction_amount"]].sum()
     agttg.reset_index(inplace= True)
 
-    #tab1, tab2 = st.tabs(['TRANSACTION AMOUNT', 'TRANSACTION COUNT'])
     col1,col2= st.columns(2)
     with col1:
 
@@ -802,6 +833,7 @@ def Aggre_Transaction_type(df, state):
                         title= f"{state.upper()} TRANSACTION TYPES AND TRANSACTION AMOUNT", height= 500)
         st.plotly_chart(fig_hbar_2)
         
+
 def Aggre_user_plot_1(df,year):
     aguy= df[df["Years"] == year]
     aguy.reset_index(drop= True, inplace= True)
@@ -815,6 +847,7 @@ def Aggre_user_plot_1(df,year):
 
     return aguy
 
+
 def Aggre_user_plot_2(df,quarter):
     auqs= df[df["Quarter"] == quarter]
     auqs.reset_index(drop= True, inplace= True)
@@ -824,6 +857,7 @@ def Aggre_user_plot_2(df,quarter):
     st.plotly_chart(fig_pie_1)
 
     return auqs
+
 
 def Aggre_user_plot_3(df,state):
     aguqy= df[df["States"] == state]
@@ -835,12 +869,12 @@ def Aggre_user_plot_3(df,state):
     fig_scatter_1= px.line(aguqyg, x= "Brands", y= "Transaction_count", markers= True,width=1000)
     st.plotly_chart(fig_scatter_1)
 
+
 def map_insure_plot_1(df,state):
     miys= df[df["States"] == state]
     miysg= miys.groupby("Districts")[["Transaction_count","Transaction_amount"]].sum()
     miysg.reset_index(inplace= True)
 
-    #tab1, tab2 = st.tabs(['DISTRICTS TRANSACTION AMOUNT', 'DISTRICTS TRANSACTION COUNT'])
     col1,col2= st.columns(2)
     with col1:
         fig_map_bar_1= px.bar(miysg, x= "Districts", y= "Transaction_amount",
@@ -854,6 +888,7 @@ def map_insure_plot_1(df,state):
                               color_discrete_sequence= px.colors.sequential.Mint)
         
         st.plotly_chart(fig_map_bar_1)
+
 
 def map_insure_plot_2(df,state):
     miys= df[df["States"] == state]
@@ -875,6 +910,7 @@ def map_insure_plot_2(df,state):
         
         st.plotly_chart(fig_map_pie_1)
 
+
 def map_user_plot_1(df, year):
     muy= df[df["Years"] == year]
     muy.reset_index(drop= True, inplace= True)
@@ -886,6 +922,7 @@ def map_user_plot_1(df, year):
     st.plotly_chart(fig_map_user_plot_1)
 
     return muy
+
 
 def map_user_plot_2(df, quarter):
     muyq= df[df["Quarter"] == quarter]
@@ -900,13 +937,13 @@ def map_user_plot_2(df, quarter):
 
     return muyq
 
+
 def map_user_plot_3(df, state):
     muyqs= df[df["States"] == state]
     muyqs.reset_index(drop= True, inplace= True)
     muyqsg= muyqs.groupby("Districts")[["RegisteredUser", "AppOpens"]].sum()
     muyqsg.reset_index(inplace= True)
 
-    #tab1, tab2 = st.tabs(['REGISTERED USER', 'APPOPENS'])
     col1,col2= st.columns(2)
     with col1:
         fig_map_user_plot_1= px.bar(muyqsg, x= "RegisteredUser",y= "Districts",orientation="h",
@@ -919,6 +956,7 @@ def map_user_plot_3(df, state):
                                     title= f"{state.upper()} APPOPENS",height=800,
                                     color_discrete_sequence= px.colors.sequential.Rainbow)
         st.plotly_chart(fig_map_user_plot_2)
+
 
 def top_user_plot_1(df,year):
     tuy= df[df["Years"] == year]
@@ -933,6 +971,7 @@ def top_user_plot_1(df,year):
 
     return tuy
 
+
 def top_user_plot_2(df,state):
     tuys= df[df["States"] == state]
     tuys.reset_index(drop= True, inplace= True)
@@ -945,6 +984,8 @@ def top_user_plot_2(df,state):
                             color_continuous_scale= px.colors.sequential.Magenta)
     st.plotly_chart(fig_top_plot_1)
 
+
+#QUESTIONS
 def ques1():
     brand= Aggre_user[["Brands","Transaction_count"]]
     brand1= brand.groupby("Brands")["Transaction_count"].sum().sort_values(ascending=False)
@@ -980,7 +1021,6 @@ def ques4():
     fig_htd= px.pie(htd2, values= "Transaction_amount", names= "Districts", title="TOP 10 DISTRICTS OF LOWEST TRANSACTION AMOUNT",
                     color_discrete_sequence=px.colors.sequential.Agsunset)
     return st.plotly_chart(fig_htd)
-
 
 def ques5():
     sa= Map_user[["States", "AppOpens"]]
@@ -1291,10 +1331,10 @@ if select == "Basic Insights":
     st.write("----")
     st.subheader("Let's know some basic insights about the data")
 
-    ques= st.selectbox("**Select the Question**",('Top Brands Of Mobiles Used','States With Lowest Trasaction Amount',
+    ques= st.selectbox("**Select the Question**",('Top Brands Of Mobiles Used','States With Lowest Transaction Amount',
                                   'Districts With Highest Transaction Amount','Top 10 Districts With Lowest Transaction Amount',
-                                  'Top 10 States With AppOpens','Least 10 States With AppOpens','States With Lowest Trasaction Count',
-                                 'States With Highest Trasaction Count','States With Highest Trasaction Amount',
+                                  'Top 10 States With AppOpens','Least 10 States With AppOpens','States With Lowest Transaction Count',
+                                 'States With Highest Transaction Count','States With Highest Transaction Amount',
                                  'Top 50 Districts With Lowest Transaction Amount'))
     
     if ques=="Top Brands Of Mobiles Used":
